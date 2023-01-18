@@ -1,0 +1,39 @@
+.swiperSlider {
+    width: 25%;
+}
+
+.smallCard {
+    display: none;
+}
+
+@media screen and (max-width: 995px) {
+    .swiperSlider {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    .swiperSlider {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .swiperSlider {
+        width: 50%;
+    }
+
+    .bigCard {
+        display: none;
+    }
+
+    .smallCard {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .swiperSlider {
+        width: 70%;
+    }
+}
