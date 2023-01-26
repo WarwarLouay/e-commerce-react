@@ -1,10 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Request from './Config/Request';
+import Cart from './Pages/Cart/Cart';
 
 const App = () => {
 
@@ -16,25 +17,27 @@ const App = () => {
   const [categories, setCategories] = React.useState([]);
   const [products, setProducts] = React.useState([]);
 
-  const callPage = React.useCallback( async () => {
-    const data = { user };
-
-    const cart = await request.getCart(data);
-    setCart(cart.data);
-
-    const category = await request.get('category');
-    setCategories(category.data);
-
-    const product = await request.get('product');
-    setProducts(product.data);
-
-    const favorite = await request.getFavorite(data);
-    setFavorites(favorite.data);
-  }, [request, user]);
-
   React.useEffect(() => {
+    const callPage = async () => {
+      const data = { user };
+  
+      const cart = await request.getCart(data);
+      setCart(cart.data);
+  
+      const category = await request.get('category');
+      setCategories(category.data);
+  
+      const product = await request.get('product');
+      setProducts(product.data);
+  
+      const favorite = await request.getFavorite(data);
+      setFavorites(favorite.data);
+  
+      console.log('jhjg');
+    };
+
     callPage();
-  }, [callPage]);
+  }, [request, user]);
 
   return (
     <BrowserRouter>
@@ -44,6 +47,7 @@ const App = () => {
                                               categories={categories}
                                               favorites={favorites} />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );

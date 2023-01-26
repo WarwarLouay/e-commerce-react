@@ -43,6 +43,11 @@ class Request {
         const link = "/api/favorite/get";
         return await this.api.post(link, data);
     }
+
+    async deleteFromcart(data) {
+        const link = "/api/cart/delete";
+        return await this.api.post(link, data);
+    }
 }
 
 export default Request;
