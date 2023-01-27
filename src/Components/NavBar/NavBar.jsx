@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate, Link } from 'react-router-dom';
 import { Navbar, Button, Text, Badge, Dropdown, Avatar } from "@nextui-org/react";
 
-const NavBar = ({ cart, favorites }) => {
+const NavBar = ({ cart, favorites, logout }) => {
     
     const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ const NavBar = ({ cart, favorites }) => {
         removeCookie('jwt');
         navigate('/');
         setIsIn(false);
+        logout();
     }
 
     return (
@@ -81,26 +82,22 @@ const NavBar = ({ cart, favorites }) => {
                             color="primary"
                             onAction={(actionKey) => console.log({ actionKey })}
                         >
-                            <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                            {/*<Dropdown.Item key="profile" css={{ height: "$18" }}>
                                 <Text b color="inherit" css={{ d: "flex" }}>
                                     Signed in as
                                 </Text>
                                 <Text b color="inherit" css={{ d: "flex" }}>
                                     zoey@example.com
                                 </Text>
+                            </Dropdown.Item>*/}
+                            <Dropdown.Item key="Profile">
+                                Profile
                             </Dropdown.Item>
-                            <Dropdown.Item key="settings" withDivider>
-                                My Settings
+                            <Dropdown.Item key="Shipping_Address"><Link style={{color: 'black', textDecoration: 'none'}} to='shipping'>Shipping Address</Link></Dropdown.Item>
+                            <Dropdown.Item key="Orders" >
+                                Orders
                             </Dropdown.Item>
-                            <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-                            <Dropdown.Item key="analytics" withDivider>
-                                Analytics
-                            </Dropdown.Item>
-                            <Dropdown.Item key="system">System</Dropdown.Item>
-                            <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-                            <Dropdown.Item key="help_and_feedback" withDivider>
-                                Help & Feedback
-                            </Dropdown.Item>
+                            <Dropdown.Item key="Language">Language</Dropdown.Item>
                             <Dropdown.Item key="logout" withDivider color="error">
                                 <div onClick={logOut}>Log Out</div>
                             </Dropdown.Item>

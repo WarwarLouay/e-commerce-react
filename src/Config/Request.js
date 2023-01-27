@@ -48,6 +48,21 @@ class Request {
         const link = "/api/cart/delete";
         return await this.api.post(link, data);
     }
+
+    async getShippingAddress(data) {
+        const link = "/api/shipping/get";
+        return await this.api.post(link, data);
+    }
+
+    async updateShippingAddress(data) {
+        const link = "/api/shipping";
+        return await this.api.post(link, data);
+    }
+
+    async checkout(data) {
+        const link = "/api/order";
+        return await this.api.post(link, data);
+    }
 }
 
 export default Request;

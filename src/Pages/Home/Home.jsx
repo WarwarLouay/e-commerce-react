@@ -6,14 +6,14 @@ import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/NavBar/NavBar'
 import Products from '../../Components/Products/Products'
 
-const Home = ({ cart, products, categories, favorites }) => {
+const Home = ({ cart, products, categories, favorites, isIn, onAddToCart, logout }) => {
   return (
     <div>
-      <NavBar cart={cart} favorites={favorites} />
+      <NavBar cart={cart} favorites={favorites} isIn={isIn} logout={logout} />
       <Carousel />
       <Features />
       <Categories categories={categories} />
-      <Products products={products} />
+      <Products products={products} isIn={isIn} onAddToCart={onAddToCart} />
       <Footer />
     </div>
   )

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-const Login = () => {
+const Login = ({ login }) => {
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = React.useState(false);
@@ -32,11 +32,12 @@ const Login = () => {
                 setOpen(true);
             }
             if (!data.user.message) {
-                localStorage.setItem('isLoggedIn', 'isLoggedIn');
+                login();
                 navigate('/');
             }
             console.log(data);
             localStorage.setItem('uid', data.user._id);
+            localStorage.setItem('uEmail', data.user.email);
         } catch (err) {
             setMessage('Something Wrong');
             setOpen(true);

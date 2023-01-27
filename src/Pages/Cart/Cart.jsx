@@ -1,15 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Request from '../../Config/Request';
-import { Grid, Card, User, Row, Button } from "@nextui-org/react";
+import { Grid, Card, User, Row, Button, Modal, Text } from "@nextui-org/react";
 import classes from './Cart.module.css';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-const Cart = () => {
+const Cart = ({ onAddToCart, onRequest }) => {
 
     const user = localStorage.getItem('uid');
+    const email = localStorage.getItem('uEmail');
     const request = new Request();
+    const navigate = useNavigate();
 
     const [cart, setCart] = React.useState([]);
 
@@ -17,11 +21,15 @@ const Cart = () => {
     const [message, setMessage] = React.useState('');
     const [severity, setSeverity] = React.useState('');
 
+    const [visible, setVisible] = React.useState(false);
+
+    const [shipping, setShipping] = React.useState('');
+
+    var cartOrder = [];
+
     const callPage = async () => {
         const data = { user };
-
         const cart = await request.getCart(data);
-        console.log(cart.data)
         setCart(cart.data);
     };
 
@@ -44,7 +52,8 @@ const Cart = () => {
             if (element._id === id) {
                 element.qty += 1;
             }
-        })
+            onRequest();
+        });
     };
 
     const decreaseQty = (id) => {
@@ -54,24 +63,75 @@ const Cart = () => {
                     element.qty -= 1;
                 }
             }
-        })
+            onRequest();
+        });
     };
 
     const deleteProduct = async (productCart) => {
         const id = productCart._id;
-        const data = { id };
-        console.log(id);
+        const data = { id, user };
         try {
             await request.deleteFromcart(data);
             setMessage(productCart.productId.productName + ' deleted.');
             setSeverity('info');
             setOpen(true);
             callPage();
+            onAddToCart(data);
         } catch {
             setMessage('Something Wrong!');
             setSeverity('error');
             setOpen(true);
         }
+    };
+
+    const checkout = async () => {
+        const data = { user };
+        const shippingAddress = await request.getShippingAddress(data);
+        if (shippingAddress.data.Address === '' || shippingAddress.data.Street === '' || shippingAddress.data.Building === '') {
+            setMessage('Please update your shipping address');
+            setSeverity('error');
+            setOpen(true);
+            setTimeout(() => {
+                navigate('/shipping');
+            }, 2000);
+        } else {
+            setShipping(shippingAddress.data._id);
+            setVisible(true);
+        }
+    };
+
+    const submitCheckoutHandler = async () => {
+        cart.forEach((element) => {
+            cartOrder.push(
+                {
+                    product: element.productId._id,
+                    qty: element.qty
+                }
+            );
+        });
+        const product = cartOrder;
+        const date = new Date().toISOString();
+        const data = { product, user, shipping, total, date, email };
+        const response = await request.checkout(data);
+        if(response.data.shipping) {
+            setVisible(false);
+            setMessage('Thank you');
+            setSeverity('success');
+            setOpen(true);
+            onAddToCart();
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+        }
+        console.log(response);
+    };
+
+    const editAddressHandler = () => {
+        navigate('/shipping');
+    };
+
+    const closeHandler = () => {
+        setVisible(false);
     };
 
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -87,7 +147,15 @@ const Cart = () => {
     };
 
     return (
-        <div>
+        <React.Fragment>
+        {
+            cart.length <= 0 ?
+            <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%)', textAlign: 'center'}}>
+              <h2>Your Cart Is Empty...</h2>
+              <h6><Link to='/'>Go To Home</Link></h6>
+            </div>
+            : 
+            <div>
             <div className='container'>
                 <h3>Your Cart</h3>
                 {cart.map((c) => {
@@ -98,7 +166,7 @@ const Cart = () => {
                                     <Row style={{ justifyContent: 'space-between' }}>
                                         <User squared src={`http://localhost:4000${c.productId.productImage}`} css={{ p: 0 }}>
                                             <h5>{c.productId.productName}</h5>
-                                            <h6>{c.productId.productPrice}$</h6>
+                                            <h6>${c.productId.productPrice}</h6>
                                         </User>
                                         <div style={{ cursor: 'pointer' }}>
                                             <svg onClick={() => deleteProduct(c)} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -129,14 +197,36 @@ const Cart = () => {
                     <b>${totalAmount()}</b>
                 </div>
 
-                <div style={{padding: ' 0 5%'}}>
-                <Button style={{width: '100%'}} shadow color="gradient" auto>
-                    Check Out
-                </Button>
-                <br/>
+                <div style={{ padding: ' 0 5%' }}>
+                    <Button onClick={checkout} style={{ width: '100%' }} shadow color="gradient" auto>
+                        Check Out
+                    </Button>
+                    <br />
                 </div>
 
             </div>
+
+            <Modal
+                closeButton
+                blur
+                aria-labelledby="modal-title"
+                open={visible}
+                onClose={closeHandler}
+            >
+                <Modal.Body>
+                    <Text id="modal-title" size={18}>
+                        Make sure you put the correct address please
+                    </Text>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button auto flat color="primary" onPress={editAddressHandler}>
+                        Edit
+                    </Button>
+                    <Button auto color="warning" onPress={submitCheckoutHandler}>
+                        Continue
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
@@ -145,6 +235,8 @@ const Cart = () => {
             </Snackbar>
 
         </div>
+        }
+        </React.Fragment>
     )
 }
 

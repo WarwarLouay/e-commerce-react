@@ -1,13 +1,11 @@
 import React from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Request from '../../Config/Request';
+import { useNavigate } from 'react-router-dom';
 import { createStyles, Image, Card, Text, Group } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useCookies } from 'react-cookie';
 import classesCSS from './Products.module.css';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
@@ -48,7 +46,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 //     'https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
 // ];
 
-const Products = ({ products }) => {
+const Products = ({ products, isIn, onAddToCart }) => {
 
     const { classes } = useStyles();
 
@@ -60,34 +58,17 @@ const Products = ({ products }) => {
 
     const navigate = useNavigate();
     const request = new Request();
-    const [cookie, removeCookie] = useCookies([]);
-
-    const [isIn, setIsIn] = React.useState(false);
 
     const user = localStorage.getItem('uid');
-
-    React.useEffect(() => {
-        const verifyUser = async () => {
-            if (!cookie.jwt) {
-            } else {
-                const { data } = await axios.post('http://localhost:4000/api/user/auth', {}, { withCredentials: true });
-                if (!data.status) {
-                    setIsIn(false);
-                } else {
-                    setIsIn(true);
-                }
-            }
-        };
-        verifyUser();
-    }, [cookie, removeCookie]);
 
     const addToCart = async (product) => {
         const productId = product._id;
         const qty = 1;
         const data = { user, productId, qty };
-        if (isIn) {
+        if (isIn === true) {
             try {
                 await request.addToCart(data);
+                onAddToCart(data);
             } catch (error) {
                 console.log(error);
             }
