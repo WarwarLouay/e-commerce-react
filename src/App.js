@@ -2,6 +2,7 @@
 
 import React from 'react';
 import axios from 'axios';
+import './i18n';
 import { useCookies } from 'react-cookie';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -12,8 +13,12 @@ import ShippingAddress from './Pages/ShippingAddress/ShippingAddress';
 import Favorite from './Pages/Favorite/Favorite';
 import Order from './Pages/Order/Order';
 import OrderDetails from './Pages/OrderDetails/OrderDetails';
+import { useTranslation } from 'react-i18next';
 
 const App = () => {
+
+  const { t, i18n } = useTranslation();
+  document.body.dir = i18n.dir();
 
   const user = localStorage.getItem('uid');
   const request = new Request();

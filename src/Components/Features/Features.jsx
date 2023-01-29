@@ -10,6 +10,7 @@ import {
     Container,
 } from '@mantine/core';
 import { IconTruck, IconCertificate, IconCoin } from '@tabler/icons';
+import { useTranslation } from 'react-i18next';
 
 const mockdata = [
     {
@@ -76,6 +77,8 @@ const useStyles = createStyles((theme) => ({
 
 const Features = () => {
 
+    const [t] = useTranslation();
+
     const { classes, theme } = useStyles();
     const features = mockdata.map((feature) => (
         <Card key={feature.title} shadow="md" radius="md" className={classes.card} p="xl">
@@ -93,17 +96,16 @@ const Features = () => {
         <Container size="lg" py="xl">
             <Group position="center">
                 <Badge variant="filled" size="lg">
-                    Best company ever
+                    {t('best_company_ever')}
                 </Badge>
             </Group>
 
             <Title order={2} className={classes.title} align="center" mt="sm">
-                Integrate effortlessly with any technology stack
+                {t('integrate_effortlessly')}
             </Title>
 
             <Text color="dimmed" className={classes.description} align="center" mt="md">
-                Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when
-                hunger drives it to try biting a Steel-type Pokémon.
+                {t('every_once_in_a_while')}
             </Text>
 
             <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
