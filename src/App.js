@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-
 import React from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
@@ -10,6 +9,9 @@ import Login from './Pages/Login/Login';
 import Request from './Config/Request';
 import Cart from './Pages/Cart/Cart';
 import ShippingAddress from './Pages/ShippingAddress/ShippingAddress';
+import Favorite from './Pages/Favorite/Favorite';
+import Order from './Pages/Order/Order';
+import OrderDetails from './Pages/OrderDetails/OrderDetails';
 
 const App = () => {
 
@@ -39,8 +41,24 @@ const App = () => {
 
     const favorite = await request.getFavorite(data);
     setFavorites(favorite.data);
+    
+    favorite.data.forEach((fav) => {
+      if (fav.user._id === user) {
+        product.data.forEach((prod) => {
+              if (prod._id === fav.product._id) {
+                  prod.isFavorite = true;
+              } else {
+                  prod.isFavorite = false;
+              }
+          })
+          console.log(product)
+      } else {
+          console.log('no');
+      }
+  });
+
   };
-  
+
   React.useEffect(() => {
 
     const verifyUser = async () => {
@@ -81,11 +99,28 @@ const App = () => {
           favorites={favorites}
           isIn={isIn}
           onAddToCart={addToCart}
+          onRequest={callPage}
           logout={logout} />}
         />
+
         <Route path='/login' element={<Login login={login} />} />
-        <Route path='/cart' element={<Cart onAddToCart={addToCart} onRequest={callPage} />} />
-        <Route path='/shipping' element={<ShippingAddress />} />
+
+        <Route path='/cart' element={<Cart onAddToCart={addToCart}
+                                            onRequest={callPage}
+                                            isIn={isIn} />} />
+
+        <Route path='/shipping' element={<ShippingAddress isIn={isIn} />} />
+
+        <Route path='/favorite' element={<Favorite favorites={favorites}
+                                                    isIn={isIn}
+                                                    cart={cart}
+                                                    logout={logout}
+                                                    onAddToCart={addToCart}
+                                                    onRequest={callPage} />} />
+
+        <Route path='/order' element={<Order isIn={isIn} />} />
+
+        <Route path='/order/:id' element={<OrderDetails isIn={isIn} />} />
       </Routes>
     </BrowserRouter>
   );

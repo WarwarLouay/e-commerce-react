@@ -8,7 +8,7 @@ import classes from './Cart.module.css';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-const Cart = ({ onAddToCart, onRequest }) => {
+const Cart = ({ onAddToCart, onRequest, isIn }) => {
 
     const user = localStorage.getItem('uid');
     const email = localStorage.getItem('uEmail');
@@ -28,6 +28,10 @@ const Cart = ({ onAddToCart, onRequest }) => {
     var cartOrder = [];
 
     const callPage = async () => {
+        if(!isIn) {
+            navigate('/login');
+        }
+
         const data = { user };
         const cart = await request.getCart(data);
         setCart(cart.data);

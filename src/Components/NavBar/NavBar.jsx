@@ -28,6 +28,7 @@ const NavBar = ({ cart, favorites, logout }) => {
 
     const logOut = () => {
         removeCookie('jwt');
+        localStorage.removeItem('uid');
         navigate('/');
         setIsIn(false);
         logout();
@@ -49,10 +50,12 @@ const NavBar = ({ cart, favorites, logout }) => {
             </Navbar.Content>*/}
             {isIn ? <Navbar.Content>
                 <Badge style={{ cursor: 'pointer' }} color="error" content={favorites ? favorites.length : 0}>
+                    <Link to='/favorite' style={{color: 'black'}}>
                     <svg style={{ cursor: 'pointer' }} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
                     </svg>
+                    </Link>
                 </Badge>
                 <Link to='/cart' style={{color: 'black'}}>
                     <Badge style={{ cursor: 'pointer' }} color="error" content={cart ? cart.length : 0}>
@@ -95,7 +98,7 @@ const NavBar = ({ cart, favorites, logout }) => {
                             </Dropdown.Item>
                             <Dropdown.Item key="Shipping_Address"><Link style={{color: 'black', textDecoration: 'none'}} to='shipping'>Shipping Address</Link></Dropdown.Item>
                             <Dropdown.Item key="Orders" >
-                                Orders
+                                <Link style={{color: 'black', textDecoration: 'none'}} to='order'>Orders</Link>
                             </Dropdown.Item>
                             <Dropdown.Item key="Language">Language</Dropdown.Item>
                             <Dropdown.Item key="logout" withDivider color="error">

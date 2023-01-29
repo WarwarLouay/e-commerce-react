@@ -63,6 +63,26 @@ class Request {
         const link = "/api/order";
         return await this.api.post(link, data);
     }
+
+    async getFavorites(data) {
+        const link = "/api/favorite/get";
+        return await this.api.post(link, data);
+    }
+
+    async toggleFavorites(data) {
+        const link = "/api/favorite";
+        return await this.api.post(link, data);
+    }
+
+    async getOrders(data) {
+        const link = "/api/order/get";
+        return await this.api.post(link, data);
+    }
+
+    async getOrderById(id) {
+        const link = "/api/order/" + id;
+        return await this.api.get(link, id);
+    }
 }
 
 export default Request;

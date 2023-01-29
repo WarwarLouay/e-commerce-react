@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Input, Spacer, Button, Loading } from "@nextui-org/react";
 import classes from './ShippingAddress.module.css';
 import Request from '../../Config/Request';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-const ShippingAddress = () => {
+const ShippingAddress = ({ isIn }) => {
 
     const user = localStorage.getItem('uid');
     const request = new Request();
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -22,6 +24,10 @@ const ShippingAddress = () => {
     const [building, setBuilding] = React.useState('');
 
     const callPage = async () => {
+        if(!isIn) {
+            navigate('/login');
+        }
+
         const data = { user };
 
         const shippingAddress = await request.getShippingAddress(data);
