@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import Moment from 'moment';
 import Request from '../../Config/Request';
 import { Grid, Card, User, Row, Badge } from "@nextui-org/react";
+import { useTranslation } from 'react-i18next';
 
 const OrderDetails = () => {
 
+    const [t, i18n] = useTranslation();
     const params = useParams();
     const request = new Request();
 
@@ -38,7 +40,7 @@ const OrderDetails = () => {
                                     <Card.Body>
                                         <Row style={{ justifyContent: 'space-between' }}>
                                             <User squared src={`http://localhost:4000${product.product.productImage}`} css={{ p: 0 }}>
-                                                {product.product.productName}
+                                                {i18n.language === 'en' ? product.product.productEngName : product.product.productArName}
                                             </User>
                                             <b>{product.product.productPrice}$</b>
                                             <b>X{product.qty}</b>
@@ -50,28 +52,28 @@ const OrderDetails = () => {
                     })}
                     <b style={{ padding: '0 5%' }}>{Moment(orderDetails.date).format('LLL')}</b>
                     {
-                        orderDetails.status === '1' ? <Badge color="success">Delivered</Badge>
+                        orderDetails.status === '1' ? <Badge color="success">{t('delivered')}</Badge>
                           :
-                          orderDetails.status === '0' ? <Badge color="warning">Pending</Badge>
+                          orderDetails.status === '0' ? <Badge color="warning">{t('pending')}</Badge>
                             :
-                            <Badge color="error">Cancelled</Badge>
+                            <Badge color="error">{t('cancelled')}</Badge>
                       }
-                    <b style={{ padding: '0 5%' }}><big>Total: </big>{orderDetails.total}$</b>
+                    <b style={{ padding: '0 5%' }}><big>{t('total')} </big>{orderDetails.total}$</b>
 
                     <Card style={{ margin: '2% 5%' }}>
                         <Card.Body>
-                            <big><b>Information:</b></big>
-                            <p><b>Name: </b>{orderDetails.user.fullName}</p>
-                            <p><b>Email: </b>{orderDetails.user.email}</p>
-                            <p><b>Phone: </b>{orderDetails.user.countryCode}{orderDetails.user.phone}</p>
+                            <big><b>{t('personal_information')}</b></big>
+                            <p><b>{t('name')}: </b>{orderDetails.user.fullName}</p>
+                            <p><b>{t('email')}: </b>{orderDetails.user.email}</p>
+                            <p><b>{t('phone')}: </b>{orderDetails.user.countryCode}{orderDetails.user.phone}</p>
                         </Card.Body>
                     </Card>
                     <Card style={{ margin: '2% 5%' }}>
                         <Card.Body>
-                            <big><b>Shipping Address:</b></big>
-                            <p><b>Address: </b>{orderDetails.shipping.Address}</p>
-                            <p><b>Street: </b>{orderDetails.shipping.Street}</p>
-                            <p><b>Building: </b>{orderDetails.shipping.Building}</p>
+                            <big><b>{t('shipping_address')}</b></big>
+                            <p><b>{t('address')}: </b>{orderDetails.shipping.Address}</p>
+                            <p><b>{t('street')}: </b>{orderDetails.shipping.Street}</p>
+                            <p><b>{t('building')}: </b>{orderDetails.shipping.Building}</p>
                         </Card.Body>
                     </Card>
                 </Grid.Container>

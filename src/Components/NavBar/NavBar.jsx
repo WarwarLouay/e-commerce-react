@@ -42,7 +42,7 @@ const NavBar = ({ cart, favorites, logout }) => {
             <Navbar.Brand>
                 {/*<AcmeLogo />*/}
                 <Text b color="inherit" hideIn="xs">
-                    BP Shop
+                    BP {t('shop')}
                 </Text>
             </Navbar.Brand>
             {isIn ? <Navbar.Content>
@@ -87,13 +87,15 @@ const NavBar = ({ cart, favorites, logout }) => {
                         </Dropdown.Item>
                         <Dropdown.Item key="Shipping_Address">
                             <Link style={{ color: 'black', textDecoration: 'none' }} to='shipping'>
-                            {t('shipping_address')}
+                                {t('shipping_address')}
                             </Link>
                         </Dropdown.Item>
                         <Dropdown.Item key="Orders" >
                             <Link style={{ color: 'black', textDecoration: 'none' }} to='order'>{t('orders')}</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item key="Language">{t('language')}</Dropdown.Item>
+                        <Dropdown.Item key="Language">
+                            <Link style={{ color: 'black', textDecoration: 'none' }} to='language'>{t('language')}</Link>
+                        </Dropdown.Item>
                         <Dropdown.Item key="logout" withDivider color="error">
                             <div onClick={logOut}>{t('log_out')}</div>
                         </Dropdown.Item>

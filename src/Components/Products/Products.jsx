@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import classesCSS from './Products.module.css';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
     price: {
@@ -41,6 +42,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 const Products = ({ products, isIn, onAddToCart, onRequest }) => {
 
+    const [t, i18n] = useTranslation();
     const { classes } = useStyles();
 
     // const slides = images.map((image) => (
@@ -82,7 +84,7 @@ const Products = ({ products, isIn, onAddToCart, onRequest }) => {
 
     return (
         <div className='container'>
-            <h3>Products</h3>
+            <h3>{t('products')}</h3>
             <Swiper
                 slidesPerView={'auto'}
                 spaceBetween={30}
@@ -113,7 +115,7 @@ const Products = ({ products, isIn, onAddToCart, onRequest }) => {
 
                                 <Group position="apart" mt="lg">
                                     <Text weight={500} size="lg">
-                                        {product.productName}
+                                        {i18n.language === 'en' ? product.productEngName : product.productArName}
                                     </Text>
 
                                     <Group spacing={5}>

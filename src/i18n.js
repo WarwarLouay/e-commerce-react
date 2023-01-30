@@ -4,7 +4,7 @@ import languagedetector from 'i18next-browser-languagedetector';
 import en from './Languages/en.json';
 import ar from './Languages/ar.json';
 
-const language = localStorage.getItem('language')
+const language = localStorage.getItem('language');
 
 i18n
   .use(initReactI18next)

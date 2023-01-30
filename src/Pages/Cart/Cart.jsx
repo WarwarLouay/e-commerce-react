@@ -7,8 +7,11 @@ import { Grid, Card, User, Row, Button, Modal, Text } from "@nextui-org/react";
 import classes from './Cart.module.css';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useTranslation } from 'react-i18next';
 
 const Cart = ({ onAddToCart, onRequest, isIn }) => {
+
+    const [t, i18n] = useTranslation();
 
     const user = localStorage.getItem('uid');
     const email = localStorage.getItem('uEmail');
@@ -76,7 +79,7 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
         const data = { id, user };
         try {
             await request.deleteFromcart(data);
-            setMessage(productCart.productId.productName + ' deleted.');
+            setMessage(productCart.productId.productEngName + ' deleted.');
             setSeverity('info');
             setOpen(true);
             callPage();
@@ -92,7 +95,7 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
         const data = { user };
         const shippingAddress = await request.getShippingAddress(data);
         if (shippingAddress.data.Address === '' || shippingAddress.data.Street === '' || shippingAddress.data.Building === '') {
-            setMessage('Please update your shipping address');
+            setMessage(`${t('please_update_your_shipping_address')}`);
             setSeverity('error');
             setOpen(true);
             setTimeout(() => {
@@ -155,8 +158,8 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
         {
             cart.length <= 0 ?
             <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%)', textAlign: 'center'}}>
-              <h2>Your Cart Is Empty...</h2>
-              <h6><Link to='/'>Go To Home</Link></h6>
+              <h2>{t('cart_empty')}</h2>
+              <h6><Link to='/'>{t('go_to_home')}</Link></h6>
             </div>
             : 
             <div>
@@ -169,7 +172,7 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
                                 <Card.Body>
                                     <Row style={{ justifyContent: 'space-between' }}>
                                         <User squared src={`http://localhost:4000${c.productId.productImage}`} css={{ p: 0 }}>
-                                            <h5>{c.productId.productName}</h5>
+                                        {i18n.language === 'en' ? <h5>{c.productId.productEngName}</h5> : <h5>{c.productId.productArName}</h5>}
                                             <h6>${c.productId.productPrice}</h6>
                                         </User>
                                         <div style={{ cursor: 'pointer' }}>
@@ -197,13 +200,13 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
 
             <div className={classes.bottom}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2%' }}>
-                    <b>Total: </b>
+                    <b>{t('total')} </b>
                     <b>${totalAmount()}</b>
                 </div>
 
                 <div style={{ padding: ' 0 5%' }}>
                     <Button onClick={checkout} style={{ width: '100%' }} shadow color="gradient" auto>
-                        Check Out
+                    {t('check_out')}
                     </Button>
                     <br />
                 </div>
@@ -219,15 +222,15 @@ const Cart = ({ onAddToCart, onRequest, isIn }) => {
             >
                 <Modal.Body>
                     <Text id="modal-title" size={18}>
-                        Make sure you put the correct address please
+                        {t('make_sure_you_put_the_correct_address_please')}
                     </Text>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button auto flat color="primary" onPress={editAddressHandler}>
-                        Edit
+                        {t('edit')}
                     </Button>
                     <Button auto color="warning" onPress={submitCheckoutHandler}>
-                        Continue
+                        {t('continue')}
                     </Button>
                 </Modal.Footer>
             </Modal>

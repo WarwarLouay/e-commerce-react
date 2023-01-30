@@ -5,8 +5,11 @@ import classes from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useTranslation } from 'react-i18next';
 
 const Login = ({ login }) => {
+
+    const [t] = useTranslation();
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = React.useState(false);
@@ -24,11 +27,11 @@ const Login = ({ login }) => {
                 ...values,
             }, { withCredentials: true });
             if (data.user.message === 'Incorrect email') {
-                setMessage('Incorrect Email');
+                setMessage(`${t('incorrect_email')}`);
                 setOpen(true);
             }
             if (data.user.message === 'Incorrect password') {
-                setMessage('Incorrect Password');
+                setMessage(`${t('incorrect_password')}`);
                 setOpen(true);
             }
             if (!data.user.message) {
@@ -39,7 +42,7 @@ const Login = ({ login }) => {
             localStorage.setItem('uid', data.user._id);
             localStorage.setItem('uEmail', data.user.email);
         } catch (err) {
-            setMessage('Something Wrong');
+            setMessage(`${t('something_wrong')}`);
             setOpen(true);
         }
         setIsLoading(false);
@@ -59,17 +62,17 @@ const Login = ({ login }) => {
 
     return (
         <div className={classes.body}>
-            <h3>Welcome Back</h3>
+            <h3>{t('welcome_back')}</h3>
             <Card className={classes.card} css={{ mw: "400px" }}>
                 <Card.Body>
                     <Spacer y={1.6} />
-                    <Input labelPlaceholder="Email" name='email' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
+                    <Input labelPlaceholder={t('email')} name='email' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
                     <Spacer y={1.6} />
-                    <Input.Password labelPlaceholder="Password" name='password' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
+                    <Input.Password labelPlaceholder={t('password')} name='password' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
                     <Spacer y={1.6} />
                     {!isLoading ? <Button shadow color="gradient" auto
                         onClick={loginHandler} >
-                        Login
+                        {t('login')}
                     </Button>
                         :
                         <Button shadow color="gradient" auto>

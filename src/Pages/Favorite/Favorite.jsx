@@ -8,6 +8,7 @@ import { Carousel } from '@mantine/carousel';
 import { AiFillHeart } from 'react-icons/ai';
 import { Col, Row } from 'react-bootstrap';
 import classesCSS from './Favorite.module.css';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
     price: {
@@ -41,6 +42,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 const Favorite = ({ cart, isIn, logout, onAddToCart, onRequest }) => {
 
+    const [i18n] = useTranslation();
     const { classes } = useStyles();
 
     const user = localStorage.getItem('uid');
@@ -121,7 +123,7 @@ const Favorite = ({ cart, isIn, logout, onAddToCart, onRequest }) => {
 
                         <Group position="apart" mt="lg">
                             <Text weight={500} size="lg">
-                                {product.product.productName}
+                                {i18n.language === 'en' ? product.product.productEngName : product.product.productArName}
                             </Text>
 
                             <Group spacing={5}>

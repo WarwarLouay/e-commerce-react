@@ -6,8 +6,11 @@ import classes from './ShippingAddress.module.css';
 import Request from '../../Config/Request';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useTranslation } from 'react-i18next';
 
 const ShippingAddress = ({ isIn }) => {
+
+    const [t] = useTranslation();
 
     const user = localStorage.getItem('uid');
     const request = new Request();
@@ -34,7 +37,6 @@ const ShippingAddress = ({ isIn }) => {
         setAddress(shippingAddress.data.Address);
         setStreet(shippingAddress.data.Street);
         setBuilding(shippingAddress.data.Building);
-        console.log('nhuj')
     };
 
     React.useEffect(() => {
@@ -46,11 +48,11 @@ const ShippingAddress = ({ isIn }) => {
         const data = { user, address, street, building };
         try {
             await request.updateShippingAddress(data);
-            setMessage('Shipping Adddress Updated');
+            setMessage(`${t('shipping_adddress_updated')}`);
             setSeverity('info');
             setOpen(true);
         } catch (error) {
-            setMessage('Something Wrong');
+            setMessage(`${t('something_wrong')}`);
             setSeverity('error');
             setOpen(true);
         }
@@ -72,20 +74,20 @@ const ShippingAddress = ({ isIn }) => {
     return (
         <div className='container'>
             <div className={classes.shipping}>
-                <h3>BP Shop</h3>
+                <h3>BP {t('shop')}</h3>
 
                 <Card className={classes.card} css={{ mw: "400px" }}>
                     <Card.Body>
                         <Spacer y={1.6} />
-                        <Input labelPlaceholder="Address" name='address' value={address} onChange={(e) => setAddress(e.target.value)} />
+                        <Input labelPlaceholder={t('address')} name='address' value={address} onChange={(e) => setAddress(e.target.value)} />
                         <Spacer y={1.6} />
-                        <Input labelPlaceholder="Street" name='street' value={street} onChange={(e) => setStreet(e.target.value)} />
+                        <Input labelPlaceholder={t('street')} name='street' value={street} onChange={(e) => setStreet(e.target.value)} />
                         <Spacer y={1.6} />
-                        <Input labelPlaceholder="Building" name='building' value={building} onChange={(e) => setBuilding(e.target.value)} />
+                        <Input labelPlaceholder={t('building')} name='building' value={building} onChange={(e) => setBuilding(e.target.value)} />
                         <Spacer y={1.6} />
                         {!isLoading ? <Button shadow color="gradient" auto
                             onClick={changeAddressHandler} >
-                            Save
+                            {t('save')}
                         </Button>
                             :
                             <Button shadow color="gradient" auto>

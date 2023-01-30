@@ -14,10 +14,11 @@ import Favorite from './Pages/Favorite/Favorite';
 import Order from './Pages/Order/Order';
 import OrderDetails from './Pages/OrderDetails/OrderDetails';
 import { useTranslation } from 'react-i18next';
+import Language from './Pages/Language/Language';
 
 const App = () => {
 
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   document.body.dir = i18n.dir();
 
   const user = localStorage.getItem('uid');
@@ -56,7 +57,6 @@ const App = () => {
                   prod.isFavorite = false;
               }
           })
-          console.log(product)
       } else {
           console.log('no');
       }
@@ -126,6 +126,8 @@ const App = () => {
         <Route path='/order' element={<Order isIn={isIn} />} />
 
         <Route path='/order/:id' element={<OrderDetails isIn={isIn} />} />
+
+        <Route path='/language' element={<Language isIn={isIn} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -12,72 +12,72 @@ import {
 import { IconTruck, IconCertificate, IconCoin } from '@tabler/icons';
 import { useTranslation } from 'react-i18next';
 
-const mockdata = [
-    {
-        icon: IconTruck,
-        title: 'Free Worldwide shipping',
-        description:
-          'As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.',
-      },
-      {
-        icon: IconCertificate,
-        title: 'Best Quality Product',
-        description:
-          'Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.',
-      },
-      {
-        icon: IconCoin,
-        title: 'Very Affordable Pricing',
-        description:
-          'Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.',
-      },
-];
-
-const useStyles = createStyles((theme) => ({
-    title: {
-        fontSize: 34,
-        fontWeight: 900,
-        [theme.fn.smallerThan('sm')]: {
-            fontSize: 24,
-        },
-    },
-
-    description: {
-        maxWidth: 600,
-        margin: 'auto',
-
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: 45,
-            height: 2,
-            marginTop: theme.spacing.sm,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-
-    card: {
-        border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-            }`,
-    },
-
-    cardTitle: {
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: 45,
-            height: 2,
-            marginTop: theme.spacing.sm,
-        },
-    },
-}));
-
 const Features = () => {
 
     const [t] = useTranslation();
+
+    const mockdata = [
+        {
+            icon: IconTruck,
+            title: `${t('free_worldwide_shipping')}`,
+            description:
+            `${t('as_electricity_builds')}`,
+          },
+          {
+            icon: IconCertificate,
+            title: `${t('best_quality_product')}`,
+            description:
+            `${t('slakoths_heart_beats')}`,
+          },
+          {
+            icon: IconCoin,
+            title: `${t('very_affordable_pricing')}`,
+            description:
+            `${t('thought_to_have')}`,
+          },
+    ];
+    
+    const useStyles = createStyles((theme) => ({
+        title: {
+            fontSize: 34,
+            fontWeight: 900,
+            [theme.fn.smallerThan('sm')]: {
+                fontSize: 24,
+            },
+        },
+    
+        description: {
+            maxWidth: 600,
+            margin: 'auto',
+    
+            '&::after': {
+                content: '""',
+                display: 'block',
+                backgroundColor: theme.fn.primaryColor(),
+                width: 45,
+                height: 2,
+                marginTop: theme.spacing.sm,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+            },
+        },
+    
+        card: {
+            border: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+                }`,
+        },
+    
+        cardTitle: {
+            '&::after': {
+                content: '""',
+                display: 'block',
+                backgroundColor: theme.fn.primaryColor(),
+                width: 45,
+                height: 2,
+                marginTop: theme.spacing.sm,
+            },
+        },
+    }));
 
     const { classes, theme } = useStyles();
     const features = mockdata.map((feature) => (
