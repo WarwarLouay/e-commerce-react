@@ -24,6 +24,11 @@ class Request {
         });
     }
 
+    async loginWithGoogle(data) {
+        const link = "/api/user/google/login";
+        return await this.api.post(link, data);
+    }
+
     async get(path) {
         const link = "/api/" + path;
         return await this.api.get(link, path);

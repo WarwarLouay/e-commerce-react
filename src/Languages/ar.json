@@ -43,5 +43,8 @@
     "delivered": "تم التوصيل",
     "pending": "قيد الانتظار",
     "cancelled": "ألغيت",
-    "select_Language": "اختار اللغة"
+    "select_Language": "اختار اللغة",
+    "or": "أو",
+    "login_with_google": "تسجيل الدخول عبر غوغل",
+    "an_account_already_created": "لقد تم إنشاء حسلب مسبقا باستخدام هذا البريد الإلكتروني في متجر BP."
 }

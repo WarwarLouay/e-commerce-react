@@ -43,5 +43,8 @@
     "delivered": "Delivered",
     "pending": "Pending",
     "cancelled": "Cancelled",
-    "select_Language": "Select Language"
+    "select_Language": "Select Language",
+    "or": "OR",
+    "login_with_google": "Log in with Google",
+    "an_account_already_created": "An account has already benn created with this email in BP Shop."
 }

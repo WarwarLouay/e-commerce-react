@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate, Link } from 'react-router-dom';
 import { Navbar, Text, Badge, Dropdown, Avatar } from "@nextui-org/react";
 import { useTranslation } from 'react-i18next';
+import { GiCheckMark } from 'react-icons/gi';
 
 const NavBar = ({ cart, favorites, logout }) => {
 
@@ -133,6 +134,7 @@ const NavBar = ({ cart, favorites, logout }) => {
                                         src="https://flagcdn.com/us.svg"
                                         alt="English" style={{ width: '30px', height: '20px' }} />
                                     English
+                                    {i18n.language  === 'en' ? <b><GiCheckMark /></b> : <b></b>}
                                 </div>
                             </Dropdown.Item>
                             <Dropdown.Item key="ar">
@@ -141,6 +143,7 @@ const NavBar = ({ cart, favorites, logout }) => {
                                         src="https://flagcdn.com/sa.svg"
                                         alt="Arabic" style={{ width: '30px', height: '20px' }} />
                                     العربية
+                                    {i18n.language  === 'ar' ? <b><GiCheckMark /></b> : <b></b>}
                                 </div>
                             </Dropdown.Item>
 
