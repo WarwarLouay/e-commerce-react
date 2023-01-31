@@ -29,6 +29,11 @@ class Request {
         return await this.api.post(link, data);
     }
 
+    async createAccount(data) {
+        const link = "/api/user";
+        return await this.api.post(link, data);
+    }
+
     async get(path) {
         const link = "/api/" + path;
         return await this.api.get(link, path);

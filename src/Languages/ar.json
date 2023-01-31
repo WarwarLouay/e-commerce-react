@@ -46,5 +46,6 @@
     "select_Language": "اختار اللغة",
     "or": "أو",
     "login_with_google": "تسجيل الدخول عبر غوغل",
-    "an_account_already_created": "لقد تم إنشاء حسلب مسبقا باستخدام هذا البريد الإلكتروني في متجر BP."
+    "an_account_already_created": "لقد تم إنشاء حسلب مسبقا باستخدام هذا البريد الإلكتروني في متجر BP.",
+    "create_account": "إنشاء حساب"
 }

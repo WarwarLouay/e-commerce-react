@@ -3,7 +3,7 @@ import axios from 'axios';
 import Request from '../../Config/Request';
 import { Card, Input, Spacer, Button, Loading } from "@nextui-org/react";
 import classes from './Login.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useTranslation } from 'react-i18next';
@@ -84,7 +84,9 @@ const Login = ({ login }) => {
                         <Button shadow color="gradient" auto>
                             <Loading type="points" color="currentColor" size="sm" />
                         </Button>}
-                    <Spacer y={1.6} />
+                        <Spacer y={1.6} />
+                        <Link to='/register'>{t('create_account')}</Link>
+                    
                     <Row>
                         <Col><hr /></Col>
                         {t('or')}

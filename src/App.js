@@ -15,6 +15,7 @@ import Order from './Pages/Order/Order';
 import OrderDetails from './Pages/OrderDetails/OrderDetails';
 import { useTranslation } from 'react-i18next';
 import Language from './Pages/Language/Language';
+import Register from './Pages/Register/Register';
 
 const App = () => {
 
@@ -109,6 +110,8 @@ const App = () => {
         />
 
         <Route path='/login' element={<Login login={login} />} />
+
+        <Route path='/register' element={<Register />} />
 
         <Route path='/cart' element={<Cart onAddToCart={addToCart}
                                             onRequest={callPage}
