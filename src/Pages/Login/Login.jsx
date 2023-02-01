@@ -72,9 +72,9 @@ const Login = ({ login }) => {
             <Card className={classes.card} css={{ mw: "400px" }}>
                 <Card.Body>
                     <Spacer y={1.6} />
-                    <Input labelPlaceholder={t('email')} name='email' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
+                    <Input placeholder={t('email')} name='email' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
                     <Spacer y={1.6} />
-                    <Input.Password labelPlaceholder={t('password')} name='password' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
+                    <Input.Password placeholder={t('password')} name='password' onChange={(e) => setValues({ ...values, [e.target.name]: e.target.value })} />
                     <Spacer y={1.6} />
                     {!isLoading ? <Button shadow color="gradient" auto
                         onClick={loginHandler} >
