@@ -8,6 +8,10 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import image1 from '../../assets/images/slider-1.jpg';
+import image2 from '../../assets/images/slider-2.jpg';
+import image3 from '../../assets/images/slider-3.jpg';
+
 const Carousel = () => {
     return (
         <Swiper
@@ -23,16 +27,13 @@ const Carousel = () => {
             style={{width: '100%', height: '450px'}}
         >
             <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-1.jpg" alt = '' />
+                <img src={image1} alt = '' />
             </SwiperSlide>
             <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" alt = '' />
+                <img src={image2} alt = '' />
             </SwiperSlide>
             <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-3.jpg" alt = '' />
-            </SwiperSlide>
-            <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-4.jpg" alt = '' />
+                <img src={image3} alt = '' />
             </SwiperSlide>
         </Swiper>
     )
